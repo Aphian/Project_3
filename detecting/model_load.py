@@ -69,6 +69,7 @@ def load_lama_cleaner():
 
 
 def load_yolo():
+    # ultralytics 에서 기본으로 제공되는 yolov8s.pt 모델 사용
     yolo_model = YOLO('yolov8s.pt')
     
     return yolo_model

@@ -96,6 +96,20 @@ def get_mask(boxes, image_array):
         y = int((center_y - height / 2) * image_array.shape[0])
         w = int(width * image_array.shape[1])
         h = int(height * image_array.shape[0])
+        # 성능향상을 위한 boundig box 크기 조정
+        x -= 10
+        y -= 20
+
+        # w와 h를 각각 10픽셀씩 크게 만듭니다.
+        w += 20
+        h += 40
+
+        # 바운딩 박스가 이미지 경계를 벗어나지 않도록 조정
+        x = max(0, x)
+        y = max(0, y)
+        w = min(image_array.shape[1] - x, w)
+        h = min(image_array.shape[0] - y, h)
+
         # 마스크 이미지에 하얀색으로 채우기
         cv2.rectangle(mask, (x, y), (x + w, y + h), (255, 255, 255), thickness=cv2.FILLED)
         

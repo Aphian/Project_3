@@ -61,23 +61,34 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
 # test 입장에서는 직접적인 경로를 활용
 def main():
     # 이미지 파일 경로
+    # input image 경로 (media/images 경로로 지정)
     image_path = '../images/img1.jpg'
     # 이미지 로드
     image = Image.open(image_path)
-    # 이미지를 NumPy 배열로 변환 (선택 사항)
+
+    # png 일 경우 lama-model 요구 차원 불충족으로 인한 RGB 차원 변환
+    image = image.convert('RGB')
+
+    # image resize 작업
+    original_width, original_height = image.size
+    new_width = original_width
+    new_height = original_height
+
+    new_width = (new_width // 32) * 32
+    new_height = (new_height // 32) * 32
+    
+    image = image.resize((new_width, new_height))
+    
     image_array = np.array(image)
-    image_array = cv2.resize(image_array, (904, 1552))
+
     # yolo 추론
     boxes = yolo_inference(image_path)
     
     # box 변환 후 마스크 get
     get_mask_image = get_mask(boxes, image_array)
     # lama 추론
-    # import pdb
-    # pdb.set_trace()
-    print(image_array.shape)
-    print(get_mask_image.shape)
     yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
+    # media/inference 폴더에 경로지정
     yolo_lama_cleaner.save('./result.png')
 
 if __name__ == "__main__":
