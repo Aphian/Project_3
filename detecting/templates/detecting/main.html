@@ -1,6 +1,12 @@
 {% extends "base.html" %}
+{% load bootstrap5 %}
 {% block content %}
 
-
+<div class='d-flex justify-content-center'>
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form login_form %}
+    </form>
+</div>
 
 {% endblock content %}

@@ -19,6 +19,13 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+def home(request):
+    from django.shortcuts import redirect
+
+    return redirect('detecting:main')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('detecting/', include('detecting.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
