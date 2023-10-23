@@ -9,7 +9,7 @@ class ImageContents(models.Model):
     image = models.ImageField(upload_to='images/')
     
     # 이미지 uuid 생성
-    image_uuid = models.TextField()
+    image_uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
 class ImageInference(models.Model):
     image_id = models.ForeignKey(ImageContents,
@@ -17,5 +17,5 @@ class ImageInference(models.Model):
                                  related_name='inf_id',
                                  )
     
-    image_inf = models.ImageField(upload_to='images/')
+    image_inf = models.ImageField(upload_to='inference_img/')
 

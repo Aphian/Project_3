@@ -1,11 +1,9 @@
-from model_load import load_lama_cleaner, load_yolo
-from util import get_mask, norm_img
+from . model_load import load_lama_cleaner, load_yolo
+from . util import get_mask, norm_img
 from PIL import Image
-import cv2
+import cv2, os
 import numpy as np
 import torch
-
-
 
 # 변수에 이미지를 받아서 yolo 추론에 넣어야함
 def yolo_inference(image_path):
@@ -59,10 +57,17 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
 
 # Web Service 에서는 Image를 input 시 DB에 원본 이미지를 저장하고 그 경로를 가져와서 추론 / mask 이미지 / lama 추론 실행
 # test 입장에서는 직접적인 경로를 활용
-def main():
+def main(target_img, target_img_path):
     # 이미지 파일 경로
+    static_folder = 'media/'
+    inferenced_image_path = os.path.join(static_folder, 'inferenced_image')
+
+    if not os.path.exists(inferenced_image_path):
+        os.makedirs(inferenced_image_path)
+
     # input image 경로 (media/images 경로로 지정)
-    image_path = '../images/img1.jpg'
+    image_path = target_img
+
     # 이미지 로드
     image = Image.open(image_path)
 
@@ -89,7 +94,7 @@ def main():
     # lama 추론
     yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
     # media/inference 폴더에 경로지정
-    yolo_lama_cleaner.save('./result.png')
+    yolo_lama_cleaner.save(inferenced_image_path)
 
 if __name__ == "__main__":
 
@@ -99,4 +104,5 @@ if __name__ == "__main__":
     # device='cuda'
     
     # lama_cleaner(image=image, mask=mask, device=device)
-    main()
+    # main()
+    pass

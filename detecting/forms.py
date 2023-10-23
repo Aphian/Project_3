@@ -1,7 +1,12 @@
 from django import forms
-from . models import ImageContents
+from . models import ImageContents, ImageInference
 
 class ImageContentsForm(forms.ModelForm):
     class Meta:
         model = ImageContents
-        fidlds = ('image', )
+        fields = ('image', )
+
+class ImageInferenceForm(forms.ModelForm):
+    class Meta:
+        model = ImageInference
+        fields = ('image_inf', )
