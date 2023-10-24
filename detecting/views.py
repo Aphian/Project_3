@@ -13,10 +13,10 @@ import base64
 
 def detecting(target_img):
 
-    target_image_path = str(target_image)
-    target_image = 'media/' + target_image_path
+    target_image_path = str(target_img)
+    target_img = 'media/' + target_image_path
 
-    inference.main(target_image, target_image_path)
+    inference.main(target_img, target_image_path)
 
 @ require_http_methods(['GET', 'POST'])
 def main(request):
