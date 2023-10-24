@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class='d-flex justify-content-center'>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form img_form %}
         <button type="submit" class="btn btn-outline-dark">Upload</button>
