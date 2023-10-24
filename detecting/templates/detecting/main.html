@@ -5,7 +5,8 @@
 <div class='d-flex justify-content-center'>
     <form method="POST">
         {% csrf_token %}
-        {% bootstrap_form login_form %}
+        {% bootstrap_form img_form %}
+        <button type="submit" class="btn btn-outline-dark">Upload</button>
     </form>
 </div>
 
