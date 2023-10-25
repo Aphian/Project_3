@@ -39,7 +39,7 @@ soupsieve==2.5
 sqlparse==0.4.4
 sympy==1.12
 thop==0.1.1.post2209072238
-torch==2.1.0+cpu
+torch==2.1.0+cu121
 torchaudio==2.1.0
 torchvision==0.16.0
 tqdm==4.66.1
