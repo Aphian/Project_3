@@ -16,7 +16,7 @@ def detecting(target_img):
     target_image_path = str(target_img)
     target_img = 'media/' + target_image_path
 
-    inference.main(target_img, target_image_path)
+    inference_path = inference.main(target_img, target_image_path)
 
 @ require_http_methods(['GET', 'POST'])
 def main(request):
@@ -27,15 +27,10 @@ def main(request):
             image.save()
             
             detecting(image.image)
-
-            # return redirect('detecting:inference_img', uuid=image.image_uuid)
+            
             return redirect('detecting:main')
             
     else:
         img_form = ImageContentsForm()
     
     return render(request, 'detecting/main.html', {'img_form': img_form})
-
-def inference_image(request, uuid):
-    pass
-
