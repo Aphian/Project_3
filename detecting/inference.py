@@ -60,7 +60,7 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
 def main(target_img, target_img_path):
     # 이미지 파일 경로
     static_folder = 'media/'
-    inferenced_image_path = os.path.join(static_folder, 'inferenced_image')
+    inferenced_image_path = os.path.join(static_folder, 'inferenced_images')
 
     if not os.path.exists(inferenced_image_path):
         os.makedirs(inferenced_image_path)
@@ -93,8 +93,11 @@ def main(target_img, target_img_path):
     get_mask_image = get_mask(boxes, image_array)
     # lama 추론
     yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
-    # media/inference 폴더에 경로지정
-    yolo_lama_cleaner.save(inferenced_image_path)
+    # media/inference_images 폴더에 경로지정
+    # '/images'를 'inferenced_images'로 대체하여 변경
+    file_path = target_img.replace('/images', '/inferenced_images')
+    
+    yolo_lama_cleaner.save(file_path)
 
 if __name__ == "__main__":
 

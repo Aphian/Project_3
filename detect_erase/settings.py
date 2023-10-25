@@ -13,13 +13,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os, torch
 
-# CUDA 사용 가능 여부 확인
-if torch.cuda.is_available():
-    device = torch.device("cuda")
-    print("CUDA 사용 가능")
-else:
-    device = torch.device("cpu")
-    print("CUDA 사용 불가능")
+# # CUDA 사용 가능 여부 확인
+# if torch.cuda.is_available():
+#     device = torch.device("cuda")
+#     print("CUDA 사용 가능")
+# else:
+#     device = torch.device("cpu")
+#     print("CUDA 사용 불가능")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
