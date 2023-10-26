@@ -99,8 +99,6 @@ def main(target_img, target_img_path):
     
     yolo_lama_cleaner.save(file_path)
 
-    return file_path
-
 if __name__ == "__main__":
 
     # TODO: 이미지, 마스크 변수 초기화 후 실행
