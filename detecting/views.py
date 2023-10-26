@@ -16,7 +16,7 @@ def detecting(target_img):
     target_image_path = str(target_img)
     target_img = 'media/' + target_image_path
 
-    inference_path = inference.main(target_img, target_image_path)
+    inference.main(target_img, target_image_path)
 
 @ require_http_methods(['GET', 'POST'])
 def main(request):
@@ -25,12 +25,22 @@ def main(request):
         if img_form.is_valid():
             image = img_form.save(commit=False)
             image.save()
-            
+
             detecting(image.image)
             
-            return redirect('detecting:main')
+            return redirect('detecting:inference_img' ,uuid=image.image_uuid)
             
     else:
         img_form = ImageContentsForm()
     
     return render(request, 'detecting/main.html', {'img_form': img_form})
+
+def inference_image(request, uuid):
+    image = get_object_or_404(ImageContents, image_uuid=uuid)
+    img_path = str(image.image)
+    inference_path = img_path.replace('images', 'inferenced_images')
+    
+    return render(request, 'detecting/inference.html', {
+        'img_path' : img_path,
+        'inference_path' : inference_path,
+    })

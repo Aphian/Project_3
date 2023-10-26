@@ -9,6 +9,6 @@ urlpatterns = [
     # main / image upload
     path('', views.main, name='main'),
     # inference result
-    # path('inference_image/', views.inference_image, name='inference_img'),
+    path('inference_image/<uuid:uuid>/', views.inference_image, name='inference_img'),
 
 ]
