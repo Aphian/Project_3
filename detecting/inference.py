@@ -91,8 +91,10 @@ def main(target_img, target_img_path):
     
     # box 변환 후 마스크 get
     get_mask_image = get_mask(boxes, image_array)
-    # lama 추론
-    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
+    # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
+    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+    # cuda 장치 환경이 있을 경우 사용
+    # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
     # media/inference_images 폴더에 경로지정
     # '/images'를 'inferenced_images'로 대체하여 변경
     file_path = target_img.replace('/images', '/inferenced_images')
