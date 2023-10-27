@@ -100,7 +100,7 @@ def get_mask(boxes, image_array):
         x -= 10
         y -= 20
 
-        # w와 h를 각각 10픽셀씩 크게 만듭니다.
+        # w와 h를 각각 20픽셀씩 크게 만듭니다.
         w += 20
         h += 40
 
