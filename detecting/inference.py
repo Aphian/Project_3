@@ -95,6 +95,7 @@ def main(target_img, target_img_path):
     yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
     # cuda 장치 환경이 있을 경우 사용
     # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
+    
     # media/inference_images 폴더에 경로지정
     # '/images'를 'inferenced_images'로 대체하여 변경
     file_path = target_img.replace('/images', '/inferenced_images')
