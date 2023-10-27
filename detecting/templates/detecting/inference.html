@@ -2,13 +2,27 @@
 {% load bootstrap5 %}
 {% block content %}
 
+<style>
+    .interence_img {
+        max-height: 90%;
+        max-width: 90%;
+        margin: auto;
+        padding: 20px;
+        display: none;
+        text-align: center;
+        align-items: center;
+    }
+
+
+</style>
+
 <div class='d-flex justify-content-center' style="padding-top: 5rem;">
-    <div class='row'>
+    <div class='row inference_img'>
         <div class="col-6">
-            <img src="/media/{{ img_path }}" alt="image" width="400" height="400">
+            <img src="/media/{{ img_path }}" alt="image" width="100%">
         </div>
         <div class="col-6">
-            <img src="/media/{{ inference_path }}" alt="image" width="400" height="400">
+            <img src="/media/{{ inference_path }}" alt="image" width="100%">
         </div>
     </div>
 </div>
