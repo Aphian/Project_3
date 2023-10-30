@@ -5,7 +5,7 @@ from ultralytics import YOLO
 model = YOLO('yolov8s.pt')
 
 # Open the video file
-video_path = "video.mp4"
+video_path = "input_media/video.mp4"
 cap = cv2.VideoCapture(video_path)
 
 # Define the output video writer

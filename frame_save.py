@@ -2,7 +2,7 @@ import cv2
 import os
 
 # 동영상 파일 경로
-video_path = 'output_video.mp4'
+video_path = 'output_media/output_video.mp4'
 
 # 이미지를 저장할 디렉토리 경로
 output_directory = 'frame_save/'
