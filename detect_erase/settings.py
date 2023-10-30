@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
     'bootstrap5',
 
-    'detecting',
+    'img_erase',
 ]
 
 MIDDLEWARE = [

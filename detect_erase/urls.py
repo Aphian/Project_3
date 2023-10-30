@@ -22,10 +22,10 @@ from django.conf import settings
 def home(request):
     from django.shortcuts import redirect
 
-    return redirect('detecting:main')
+    return redirect('img_erase:main')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('detecting/', include('detecting.urls')),
+    path('detecting/', include('img_erase.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

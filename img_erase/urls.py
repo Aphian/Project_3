@@ -3,7 +3,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
-app_name = 'detecting'
+app_name = 'img_erase'
 
 urlpatterns = [
     # main / image upload
