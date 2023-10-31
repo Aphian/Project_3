@@ -30,7 +30,4 @@ while cap.isOpened():
     if frame_count % frame_interval == 0:
         image_filename = os.path.join(output_directory, f"frame_{frame_count:04d}.jpg")
         cv2.imwrite(image_filename, frame)
-        
-# 비디오 캡처 객체와 창 닫기
 cap.release()
-# cv2.destroyAllWindows()

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'bootstrap5',
 
     'img_erase',
+    'media_erase',
 ]
 
 MIDDLEWARE = [
