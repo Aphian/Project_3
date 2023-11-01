@@ -1,5 +1,5 @@
 from . model_load import load_lama_cleaner, load_yolo
-from . util import get_mask, norm_img, set_video, frame_save
+from . util import get_mask, norm_img, set_video, frame_save, delete_folder_contents
 from PIL import Image
 import cv2
 import numpy as np
@@ -58,16 +58,18 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
     return Image.fromarray(cur_res)
 
 # 영상 경로 가져와야함
-def video_inference():
-    video_path = 'input_media/video.mp4'
+def video_inference(target_video):
+    # video_path = 'input_media/video.mp4'
+    static_folder = 'media/'
 
-    folder_path = frame_save(video_path)
-
-    # 결과 이미지 폴더가 없으면 생성
-    result_folder = 'results/'
+    # 추론 결과 이미지 폴더가 없으면 생성
+    results_inference_video_path = os.path.join(static_folder, 'results_inference_videos')
     
-    if not os.path.exists(result_folder):
-        os.makedirs(result_folder)
+    if not os.path.exists(results_inference_video_path):
+        os.makedirs(results_inference_video_path)
+
+    # 추론할 이미지
+    folder_path = frame_save(target_video)
 
     # 폴더 내의 모든 파일 목록 가져오기
     image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
@@ -102,12 +104,19 @@ def video_inference():
         # lama 추론
         yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
 
-        # 결과 이미지를 각 이미지 파일 이름으로 저장
-        result_path = f'results/{image_path.split("/")[-1]}'  
+        # 추론 이미지 경로
+        result_path = f'media/results_inference_videos/{image_path.split("/")[-1]}'
+        result_path = result_path.replace("/frame_save", "")
+
+        # 추론 이미지 저장
         yolo_lama_cleaner.save(result_path)
 
-    set_video()
-    
+    set_video(results_inference_video_path, target_video)
+
+    delete_folder_contents('media/frame_save')
+    delete_folder_contents('media/results_inference_videos')
+
+
 if __name__ == "__main__":
 
     # TODO: 이미지, 마스크 변수 초기화 후 실행
