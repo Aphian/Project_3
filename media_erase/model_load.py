@@ -5,7 +5,7 @@ from PIL import Image
 from ultralytics import YOLO
 from loguru import logger
 import hashlib
-from util import norm_img, download_model
+from . util import norm_img, download_model
 
 def md5sum(filename):
     md5 = hashlib.md5()

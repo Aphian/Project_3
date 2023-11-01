@@ -27,5 +27,6 @@ def home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
-    path('detecting/', include('img_erase.urls')),
+    path('image/', include('img_erase.urls')),
+    path('video/', include('media_erase.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

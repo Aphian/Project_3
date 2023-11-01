@@ -1,5 +1,5 @@
-from model_load import load_lama_cleaner, load_yolo
-from util import get_mask, norm_img, set_video, frame_save
+from . model_load import load_lama_cleaner, load_yolo
+from . util import get_mask, norm_img, set_video, frame_save
 from PIL import Image
 import cv2
 import numpy as np
@@ -58,53 +58,53 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
     return Image.fromarray(cur_res)
 
 # 영상 경로 가져와야함
-def main():
-    # video_path = 'input_media/video.mp4'
+def video_inference():
+    video_path = 'input_media/video.mp4'
 
-    # folder_path = frame_save(video_path)
+    folder_path = frame_save(video_path)
 
-    # # 결과 이미지 폴더가 없으면 생성
-    # result_folder = 'results/'
+    # 결과 이미지 폴더가 없으면 생성
+    result_folder = 'results/'
     
-    # if not os.path.exists(result_folder):
-    #     os.makedirs(result_folder)
+    if not os.path.exists(result_folder):
+        os.makedirs(result_folder)
 
-    # # 폴더 내의 모든 파일 목록 가져오기
-    # image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
+    # 폴더 내의 모든 파일 목록 가져오기
+    image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
     
-    # for image_file in image_files:
-    #     image_path = os.path.join(folder_path, image_file)
+    for image_file in image_files:
+        image_path = os.path.join(folder_path, image_file)
     
-    #     # 이미지 로드
-    #     image = Image.open(image_path)
+        # 이미지 로드
+        image = Image.open(image_path)
     
-    #     # image 파일이 PNG인 경우 채널 에러가 날 수 있으므로 RGB로 변환
-    #     image = image.convert('RGB')
+        # image 파일이 PNG인 경우 채널 에러가 날 수 있으므로 RGB로 변환
+        image = image.convert('RGB')
         
-    #     # image resize
-    #     original_width, original_height = image.size
-    #     new_width = original_width
-    #     new_height = original_height
+        # image resize
+        original_width, original_height = image.size
+        new_width = original_width
+        new_height = original_height
 
-    #     new_width = (new_width // 32) * 32
-    #     new_height = (new_height // 32) * 32
+        new_width = (new_width // 32) * 32
+        new_height = (new_height // 32) * 32
 
-    #     image = image.resize((new_width, new_height))
+        image = image.resize((new_width, new_height))
 
-    #     image_array = np.array(image)
+        image_array = np.array(image)
 
-    #     # yolo 추론
-    #     boxes = yolo_inference(image_path)
+        # yolo 추론
+        boxes = yolo_inference(image_path)
 
-    #     # box 변환 후 마스크 get
-    #     get_mask_image = get_mask(boxes, image_array)
+        # box 변환 후 마스크 get
+        get_mask_image = get_mask(boxes, image_array)
 
-    #     # lama 추론
-    #     yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+        # lama 추론
+        yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
 
-    #     # 결과 이미지를 각 이미지 파일 이름으로 저장
-    #     result_path = f'results/{image_path.split("/")[-1]}'  
-    #     yolo_lama_cleaner.save(result_path)
+        # 결과 이미지를 각 이미지 파일 이름으로 저장
+        result_path = f'results/{image_path.split("/")[-1]}'  
+        yolo_lama_cleaner.save(result_path)
 
     set_video()
     
@@ -116,5 +116,6 @@ if __name__ == "__main__":
     # device='cuda'
     
     # lama_cleaner(image=image, mask=mask, device=device)
-    main()
+    video_inference()
+    pass
     

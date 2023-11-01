@@ -7,7 +7,7 @@ app_name = 'media_erase'
 
 urlpatterns = [
     # media upload
-    path('media/', views.media_upload, name='media_upload'),
+    path('', views.media_upload, name='media_upload'),
     # inference result
     path('inference_media/<uuid:uuid>/', views.inference_media, name='inference_media'),
 
