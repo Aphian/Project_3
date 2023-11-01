@@ -5,7 +5,7 @@
 <style>
     .file-upload {
         background-color: #ffffff;
-        width: 600px;
+        width: 47rem;
         margin: 0 auto;
         padding: 20px;
       }
@@ -57,6 +57,11 @@
         padding: 0 15px 15px 15px;
         color: #222;
       }
+
+      .file-upload-video {
+        margin: auto;
+        padding: 20px;
+      }
 </style>
 
 <script>
@@ -105,11 +110,11 @@
         <div class="video-upload-wrap">
         <input class="file-upload-input" type="file" id="videoInput" accept="video/*" onchange="playVideo(this)" name="media">
         <div class="drag-text">
-            <h3 class="fs-5">Select add Video</h3>
+            <h3 class="fs-5">Drag and drop a file or select add Video</h3>
         </div>
     </div>
     <div class="file-upload-content">
-        <video id="videoPlayer" controls class="file-upload-video" width="80%"></video>
+        <video id="videoPlayer" controls class="file-upload-video" width="100%"></video>
         <div class="video-title-wrap">
             <button type="submit" class="btn btn-outline-dark">Upload</button>
             <button type="button" onclick="removeUpload()" class="btn btn-outline-dark">Cencle</button>

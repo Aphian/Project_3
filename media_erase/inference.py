@@ -125,6 +125,6 @@ if __name__ == "__main__":
     # device='cuda'
     
     # lama_cleaner(image=image, mask=mask, device=device)
-    video_inference()
+    # video_inference()
     pass
     

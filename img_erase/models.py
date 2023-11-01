@@ -4,6 +4,7 @@ import uuid
 
 # Create your models here.
 
+# DB 필요한 colums 명 속성 정의
 class ImageContents(models.Model):
     # 이미지 input
     image = models.ImageField(upload_to='images/')
