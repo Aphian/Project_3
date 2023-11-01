@@ -11,12 +11,12 @@ from . models import ImageContents
 from . forms import ImageContentsForm
 import base64
 
-def detecting(target_img):
+def img_detect(target_img):
 
     target_image_path = str(target_img)
     target_img = 'media/' + target_image_path
 
-    inference.main(target_img, target_image_path)
+    inference.img_inference(target_img)
 
 @ require_http_methods(['GET', 'POST'])
 def main(request):
@@ -26,7 +26,7 @@ def main(request):
             image = img_form.save(commit=False)
             image.save()
 
-            detecting(image.image)
+            img_detect(image.image)
             
             return redirect('img_erase:inference_img' ,uuid=image.image_uuid)
             
@@ -40,7 +40,7 @@ def inference_image(request, uuid):
     img_path = str(image.image)
     inference_path = img_path.replace('images', 'inferenced_images')
     
-    return render(request, 'img_erase/inference.html', {
+    return render(request, 'img_erase/img_inference.html', {
         'img_path' : img_path,
         'inference_path' : inference_path,
     })

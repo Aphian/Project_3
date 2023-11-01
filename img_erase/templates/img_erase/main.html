@@ -9,33 +9,6 @@
         padding: 20px;
       }
       
-      .file-upload-btn {
-        width: 100%;
-        margin: 0;
-        color: #fff;
-        background: #1FB264;
-        border: none;
-        padding: 10px;
-        border-radius: 4px;
-        border-bottom: 4px solid #15824B;
-        transition: all .2s ease;
-        outline: none;
-        text-transform: uppercase;
-        font-weight: 700;
-      }
-      
-      .file-upload-btn:hover {
-        background: #1AA059;
-        color: #ffffff;
-        transition: all .2s ease;
-        cursor: pointer;
-      }
-      
-      .file-upload-btn:active {
-        border: 0;
-        transition: all .2s ease;
-      }
-      
       .file-upload-content {
         display: none;
         text-align: center;
@@ -96,7 +69,6 @@
   
       reader.onload = function(e) {
         $('.image-upload-wrap').hide();
-  
         $('.file-upload-image').attr('src', e.target.result);
         $('.file-upload-content').show();
   
@@ -121,6 +93,7 @@
     $('.image-upload-wrap').bind('dragleave', function () {
       $('.image-upload-wrap').removeClass('image-dropping');
   });
+
 </script>
 <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <div class="d-flex justify-content-center" style="padding-top: 5rem;">

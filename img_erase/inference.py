@@ -57,7 +57,7 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
 
 # Web Service 에서는 Image를 input 시 DB에 원본 이미지를 저장하고 그 경로를 가져와서 추론 / mask 이미지 / lama 추론 실행
 # test 입장에서는 직접적인 경로를 활용
-def main(target_img, target_img_path):
+def img_inference(target_img):
     # 이미지 파일 경로
     static_folder = 'media/'
     inferenced_image_path = os.path.join(static_folder, 'inferenced_images')

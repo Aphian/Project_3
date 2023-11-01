@@ -6,15 +6,35 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 from uuid import uuid4
-from img_erase import inference
+from . import inference
 from . models import MediaContents
 from . forms import MediaContentsForm
 import base64
 
 # Create your views here.
 
+def video_detect(tartget_video):
+    target_video_path = str(tartget_video)
+    target_video = 'media/' + target_video_path
+
+    inference.video_inference(target_video, target_video_path)
+
+@require_http_methods(['GET', 'POST'])
 def media_upload(request):
-    pass
+    if request.method == 'POST':
+        media_form = MediaContentsForm(request.POST, request.FILES)
+        if media_form.is_valid():
+            media = media_form(commit=False)
+            media.save()
+
+            video_detect(media.media)
+
+            return redirect('media_erase:inference_media', uuid=media.media_uuid)
+    else:
+        media_form = MediaContentsForm()
+    return render(request, 'media_erase/upload_video.html', {
+        'media_form' : media_form,
+    })
 
 def inference_media(request):
     pass

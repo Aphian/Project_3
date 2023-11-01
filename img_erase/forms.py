@@ -5,4 +5,3 @@ class ImageContentsForm(forms.ModelForm):
     class Meta:
         model = ImageContents
         fields = ('image', )
-
