@@ -114,16 +114,58 @@ def get_mask(boxes, image_array):
         
     return mask
 
+# frame 단위 이미지 저장
+def frame_save(video_path):
+    # 이미지를 저장할 디렉토리 경로
+    # frame_directory = 'frame_save/'
+
+    static_folder = 'media/'
+    frame_video_path = os.path.join(static_folder, 'frame_save')
+
+    if not os.path.exists(frame_video_path):
+        os.makedirs(frame_video_path)
+
+    # 비디오 캡처 객체 생성
+    cap = cv2.VideoCapture(video_path)
+
+    # 프레임 간격
+    frame_interval = 10
+
+    # 프레임 수 초기화
+    frame_count = 0
+
+    while cap.isOpened():
+        ret, frame = cap.read()
+
+        if not ret:
+            break
+
+        # 각 프레임을 이미지로 저장
+        frame_count += 1
+        if frame_count % frame_interval == 0:
+            image_filename = os.path.join(frame_video_path, f"frame_{frame_count:04d}.jpg")
+            cv2.imwrite(image_filename, frame)
+
+    cap.release()
+
+    return frame_video_path
+
 # 이미지 영상으로 변환
-def set_video():
+def set_video(results_inference_video_path, target_video):
     # 이미지 파일들이 있는 폴더 경로
-    image_folder = 'results/'
+    image_folder = results_inference_video_path
+    
+    target_video = target_video.replace('media/videos/', '')
 
     # 결과 MP4 파일 경로 및 설정
-    output_folder = 'results_video/'
-    os.makedirs(output_folder, exist_ok=True)
+    static_folder = 'media/'
+    output_folder = os.path.join(static_folder, 'results_video')
+
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
     
-    output_video_path = os.path.join(output_folder, 'test_1.mp4')
+    # 생성된 영상 이름 input 된 파일 이름
+    output_video_path = os.path.join(output_folder, target_video)
     # fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 코덱 설정
     fourcc = cv2.VideoWriter_fourcc(*'H264')  # 코덱 설정
     frame_rate = 2.0
@@ -145,35 +187,9 @@ def set_video():
         
     video.release()
 
-# frame 단위 이미지 저장
-def frame_save(video_path):
-    # 이미지를 저장할 디렉토리 경로
-    frame_directory = 'frame_save/'
-
-    # 만약 디렉토리가 존재하지 않으면 생성
-    os.makedirs(frame_directory, exist_ok=True)
-
-    # 비디오 캡처 객체 생성
-    cap = cv2.VideoCapture(video_path)
-
-    # 프레임 간격
-    frame_interval = 10
-
-    # 프레임 수 초기화
-    frame_count = 0
-
-    while cap.isOpened():
-        ret, frame = cap.read()
-
-        if not ret:
-            break
-
-        # 각 프레임을 이미지로 저장
-        frame_count += 1
-        if frame_count % frame_interval == 0:
-            image_filename = os.path.join(frame_directory, f"frame_{frame_count:04d}.jpg")
-            cv2.imwrite(image_filename, frame)
-
-    cap.release()
-
-    return frame_directory
+# 영상 생성 후 frame 이미지 / 추론 이미지 폴더 내용 삭제
+def delete_folder_contents(folder_path):
+    for item in os.listdir(folder_path):
+        item_path = os.path.join(folder_path, item)
+        if os.path.isfile(item_path):
+            os.remove(item_path)
