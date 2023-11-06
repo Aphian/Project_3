@@ -114,3 +114,19 @@ def get_mask(boxes, image_array):
         cv2.rectangle(mask, (x, y), (x + w, y + h), (255, 255, 255), thickness=cv2.FILLED)
         
     return mask
+
+def get_mask_seg(poly_xyn, image_array):
+
+    mask = np.zeros((image_array.shape[0],image_array.shape[1]))
+
+    # 이미지의 크기.
+    image_width, image_height = image_array.shape[1], image_array.shape[0]
+    
+    for poly in poly_xyn:
+        poly = np.array(poly * np.array([image_width, image_height]), dtype=int)
+        cv2.fillPoly(mask, [poly], 255)
+
+    # 이미지 팽창   
+    mask = cv2.dilate(mask, None, iterations=20)
+
+    return mask
