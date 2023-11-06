@@ -110,9 +110,8 @@ def img_inference(target_img):
 
     # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
     # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
-    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image_seg, device='cpu')
     # cuda 장치 환경이 있을 경우 사용
-    # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
+    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image_seg, device='cpu')
     
     # media/inference_images 폴더에 경로지정
     # '/images'를 'inferenced_images'로 대체하여 변경
