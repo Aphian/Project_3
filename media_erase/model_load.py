@@ -63,7 +63,7 @@ def load_lama_cleaner():
 
     lama_model = load_jit_model(LAMA_MODEL_URL, device, LAMA_MODEL_MD5).eval()
     
-    # 여기서 lame_model pth 로 저장
+    # 여기서 lame_model path 로 저장
     return lama_model
 
 

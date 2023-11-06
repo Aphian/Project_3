@@ -1,5 +1,5 @@
-from . model_load import load_lama_cleaner, load_yolo
-from . util import get_mask, norm_img
+from . model_load import load_lama_cleaner, load_yolo, load_yolo_seg
+from . util import get_mask, norm_img, get_mask_seg
 from PIL import Image
 import cv2, os
 import numpy as np
@@ -37,6 +37,16 @@ def yolo_inference(image_path):
     # print(final_xywhn)
     
     return final_xywhn
+
+def yolo_inference_seg(image_path):
+    # yolo 추론
+    model = load_yolo_seg()
+    # 이미지 추론시 size 조정이 필요함
+    results = model(image_path, classes = 0)
+    
+    poly_xyn = results[0].masks.xyn
+    
+    return poly_xyn
 
 def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
     model = load_lama_cleaner()
@@ -86,13 +96,21 @@ def img_inference(target_img):
     
     image_array = np.array(image)
 
-    # yolo 추론
-    boxes = yolo_inference(image_path)
+    # yolo 추론 boxex
+    # boxes = yolo_inference(image_path)
+
+    # yolo 추론 polygon
+    polygon = yolo_inference_seg(image_path)
     
     # box 변환 후 마스크 get
-    get_mask_image = get_mask(boxes, image_array)
+    # get_mask_image = get_mask(boxes, image_array)
+
+    # get_mask_image seg
+    get_mask_image_seg = get_mask_seg(polygon, image_array)
+
     # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
-    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+    # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image_seg, device='cpu')
     # cuda 장치 환경이 있을 경우 사용
     # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
     
