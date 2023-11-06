@@ -102,7 +102,7 @@ def video_inference(target_video):
         get_mask_image = get_mask(boxes, image_array)
 
         # lama 추론
-        yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+        yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
 
         # 추론 이미지 경로
         result_path = f'media/results_inference_videos/{image_path.split("/")[-1]}'
