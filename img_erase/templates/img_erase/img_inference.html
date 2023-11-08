@@ -38,9 +38,27 @@
         window.location.href = '/image';
     }
 
-    function ImageDownload() {
+    var inference_image = "/media/{{ inference_path }}";
 
+    function set_img_name(inference_image) {
+        var down_file = inference_image.split('/');
+        return down_file[down_file.length - 1];
     }
+
+    function ImageDownload() {
+        var down_file_name = set_img_name(inference_image);
+        console.log(down_file_name)
+
+        // 이미지를 다운로드하기 위해 새로운 링크를 생성합니다.
+        var a = document.createElement('a');
+        a.href = inference_image;
+        a.download = down_file_name; // 추출된 파일 이름을 설정
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
 </script>
 
 <div class='d-flex justify-content-center inf_img_content'>
