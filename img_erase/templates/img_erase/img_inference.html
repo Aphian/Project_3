@@ -3,29 +3,75 @@
 {% block content %}
 
 <style>
-    .interence_img {
-        width: 24rem;
-        margin: auto;
-        padding: 20px;
-        display: none;
-        text-align: center;
+    .inf_img_content {
+        padding-top: 5rem;
+    }
+    .inference_img {
         align-items: center;
     }
 
+    .image_content {
+        width: 540px;
+        height: 300px;
+        margin-bottom: 4rem;
+    }
+
+    .img_content {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .btn_groups{
+        text-align: center;
+    }
 
 </style>
 
-<div class='d-flex justify-content-center' style="padding-top: 5rem;">
+<script>
+    function ImageUploadMove() {
+
+        window.location.href = '/image';
+    }
+
+    var inference_image = "/media/{{ inference_path }}";
+
+    function set_img_name(inference_image) {
+        var down_file = inference_image.split('/');
+        return down_file[down_file.length - 1];
+    }
+
+    function ImageDownload() {
+        var down_file_name = set_img_name(inference_image);
+        console.log(down_file_name)
+
+        // 이미지를 다운로드하기 위해 새로운 링크를 생성합니다.
+        var a = document.createElement('a');
+        a.href = inference_image;
+        a.download = down_file_name; // 추출된 파일 이름을 설정
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+</script>
+
+<div class='d-flex justify-content-center inf_img_content'>
     <div class='row inference_img'>
-        <div class="col-6">
+        <div class="col-6 image_content">
             <h4>Before</h4>
-            <img src="/media/{{ img_path }}" alt="image" width="100%">
+            <img src="/media/{{ img_path }}" alt="image" class="img_content">
         </div>
-        <div class="col-6">
+        <div class="col-6 image_content">
             <h4>After</h4>
-            <img src="/media/{{ inference_path }}" alt="image" width="100%">
+            <img src="/media/{{ inference_path }}" alt="image" class="img_content">
         </div>
     </div>
+</div>
+<div class="btn_groups">
+    <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="ImageDownload()">Download</button>
+    <button class="btn btn-outline-dark" onclick="ImageUploadMove()">Back</button>
 </div>
 
 

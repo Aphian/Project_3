@@ -128,8 +128,8 @@ def frame_save(video_path):
     # 비디오 캡처 객체 생성
     cap = cv2.VideoCapture(video_path)
 
-    # 프레임 간격
-    frame_interval = 1
+    # 프레임 간격으로 이미지 저장
+    frame_interval = 30
 
     # 프레임 수 초기화
     frame_count = 0
@@ -168,7 +168,8 @@ def set_video(results_inference_video_path, target_video):
     output_video_path = os.path.join(output_folder, target_video)
     # fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 코덱 설정
     fourcc = cv2.VideoWriter_fourcc(*'H264')  # 코덱 설정
-    frame_rate = 2.0
+    # 사용자가 영상의 frame 단위를 보내야함
+    frame_rate = 1.0
 
     # 이미지 파일 목록 가져오기
     image_files = [os.path.join(image_folder, f) for f in os.listdir(image_folder) if f.endswith('.jpg')]
