@@ -129,7 +129,7 @@ def frame_save(video_path):
     cap = cv2.VideoCapture(video_path)
 
     # 프레임 간격
-    frame_interval = 10
+    frame_interval = 1
 
     # 프레임 수 초기화
     frame_count = 0
