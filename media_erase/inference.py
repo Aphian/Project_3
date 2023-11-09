@@ -1,4 +1,5 @@
-from . model_load import load_lama_cleaner, load_yolo
+# from . model_load import load_lama_cleaner, load_yolo
+from img_erase import model_load
 from . util import get_mask, norm_img, set_video, frame_save, delete_folder_contents
 from PIL import Image
 import cv2
@@ -9,7 +10,7 @@ import os
 # 변수에 이미지를 받아서 yolo 추론에 넣어야함
 def yolo_inference(image_path):
     # yolo 추론
-    model = load_yolo()
+    model = model_load.load_yolo()
     # 이미지 추론시 size 조정이 필요함
     results = model(image_path)
     
@@ -40,8 +41,11 @@ def yolo_inference(image_path):
     
     return final_xywhn
 
-def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
-    model = load_lama_cleaner()
+# 모델 업로드
+model_lama = model_load.load_lama_cleaner()
+
+def lama_cleaner(model_lama, image: np.ndarray, mask: np.ndarray, device: str):
+    # model = load_lama_cleaner()
     
     image = norm_img(image)
     mask = norm_img(mask)
@@ -50,7 +54,7 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
     image = torch.from_numpy(image).unsqueeze(0).to(device)
     mask = torch.from_numpy(mask).unsqueeze(0).to(device)
 
-    inpainted_image = model(image, mask) # inference
+    inpainted_image = model_lama(image, mask) # inference
 
     cur_res = inpainted_image[0].permute(1, 2, 0).detach().cpu().numpy()
     cur_res = np.clip(cur_res * 255, 0, 255).astype("uint8")
@@ -103,7 +107,7 @@ def video_inference(target_video):
 
         # lama 추론
         # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
-        yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+        yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image, device='cpu')
         
         # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
 
