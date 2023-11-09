@@ -35,42 +35,22 @@
         window.location.href = '/video';
     }
 
-    var inference_video = "/media/{{ inference_path }}";
-
-    function set_img_name(inference_video) {
-        var down_file = inference_video.split('/');
-        return down_file[down_file.length - 1];
-    }
-
-    function VideoDownload() {
-        var down_file_name = set_img_name(inference_video);
-        console.log(down_file_name)
-
-        var a = document.createElement('a');
-        a.href = inference_video;
-        a.download = down_file_name; // 추출된 파일 이름을 설정
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-    }
-
 </script>
 
 <div class='d-flex justify-content-center inf_video_content'>
-    <div class='row inference_vedio'>
-        <div class="col-6 video_content">
-            <h4>Before</h4>
-            <video src="/media/{{ media_path }}" controls class="vid_content"></video>
-        </div>
-        <div class="col-6 video_content">
-            <h4>After</h4>
-            <video src="/media/{{ inference_path }}" controls class="vid_content"></video>
-        </div>
+    <div class="video_content">
+        <h4>Upload Video</h4>
+        <video src="/media/{{ media_path }}" controls class="vid_content"></video>
+    </div>
+</div>
+<div class='d-flex justify-content-center inf_video_content'>
+    <div class="video_content">
+        <h4>Load View Image</h4>
+        <img src="#" alt="#">
     </div>
 </div>
 <div class="btn_groups">
-    <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="VideoDownload()">Download</button>
+    <button class="btn btn-outline-dark" style="padding-end: 1rem;">Download</button>
     <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
 </div>
 
