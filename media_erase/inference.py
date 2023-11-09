@@ -118,10 +118,8 @@ def video_inference(target_video, selected_second):
         yolo_lama_cleaner.save(result_path)
 
     # set_video(results_inference_video_path, target_video)
-
-    delete_folder_contents('media/frame_save')
     # delete_folder_contents('media/results_inference_videos')
-
+    delete_folder_contents('media/frame_save')
 
 if __name__ == "__main__":
 

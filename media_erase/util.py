@@ -144,7 +144,10 @@ def frame_save(video_path, media_second):
 
     # 비디오의 길이(총 시간) 계산
     duration_in_seconds = round(total_frames / frame_interval)
-    print(duration_in_seconds)
+
+    media_second = int(media_second)
+
+    count = frame_interval * media_second
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -154,15 +157,12 @@ def frame_save(video_path, media_second):
 
         # 각 프레임을 이미지로 저장
         frame_count += 1
-        if frame_count % frame_interval == 0:
+        if frame_count % count == 0:
             image_filename = os.path.join(frame_video_path, f"frame_{frame_count:04d}.jpg")
             # 저장 경로를 영상 말고 이미지로 경로를 정해서 해야함
             cv2.imwrite(image_filename, frame)
 
     cap.release()
-
-    print(frame_video_path)
-
     return frame_video_path
 
 # 이미지 영상으로 변환

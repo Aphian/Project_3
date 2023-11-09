@@ -16,7 +16,6 @@ import base64
 def video_detect(tartget_video, media_second):
     target_video_path = str(tartget_video)
     target_video = 'media/' + target_video_path
-    print(media_second)
 
     inference.video_inference(target_video, media_second)
 
@@ -28,7 +27,6 @@ def media_upload(request):
         if media_form.is_valid():
             media = media_form.save(commit=False)
             media.save()
-            print(media_second)
 
             video_detect(media.media, media_second)
 
