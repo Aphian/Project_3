@@ -66,7 +66,6 @@ def load_lama_cleaner():
     # 여기서 lame_model pth 로 저장
     return lama_model
 
-
 def load_yolo():
     # ultralytics 에서 기본으로 제공되는 yolov8s.pt 모델 사용
     yolo_model = YOLO('yolov8s.pt')
