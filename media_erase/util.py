@@ -156,6 +156,7 @@ def frame_save(video_path, media_second):
             break
 
         # 각 프레임을 이미지로 저장
+        # 저장할 때 upload 된 이미지 이름을 가져와서 frame 붙이기
         frame_count += 1
         if frame_count % count == 0:
             image_filename = os.path.join(frame_video_path, f"frame_{frame_count:04d}.jpg")
