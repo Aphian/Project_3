@@ -13,24 +13,26 @@ import base64
 
 # Create your views here.
 
-def video_detect(tartget_video):
+def video_detect(tartget_video, media_second):
     target_video_path = str(tartget_video)
     target_video = 'media/' + target_video_path
+    print(media_second)
 
-    inference.video_inference(target_video)
+    inference.video_inference(target_video, media_second)
 
 @require_http_methods(['GET', 'POST'])
 def media_upload(request):
     if request.method == 'POST':
         media_form = MediaContentsForm(request.POST, request.FILES)
+        media_second = request.POST.get('media_second')
         if media_form.is_valid():
             media = media_form.save(commit=False)
             media.save()
+            print(media_second)
 
-            video_detect(media.media)
+            video_detect(media.media, media_second)
 
             return redirect('media_erase:inference_media', uuid=media.media_uuid)
-            # return render(request, 'media_erase/upload_video.html')
     else:
         media_form = MediaContentsForm()
     return render(request, 'media_erase/upload_video.html', {

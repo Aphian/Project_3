@@ -64,6 +64,10 @@
         object-fit: cover;
         text-align: center;
       }
+
+      .form-select {
+        margin-bottom: 1rem;
+      }
 </style>
 
 <script>
@@ -118,8 +122,18 @@
     <div class="file-upload-content">
         <video id="videoPlayer" controls class="file-upload-video"></video>
         <div class="video-title-wrap">
-            <button type="submit" class="btn btn-outline-dark">Upload</button>
-            <button type="button" onclick="removeUpload()" class="btn btn-outline-dark">Cencle</button>
+          <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="media_second">
+              <option selected>select seconds</option>
+              <option value="5">5초</option>
+              <option value="10">10초</option>
+              <option value="30">30초</option>
+              <option value="60">60초</option>
+            </select>
+            <label for="floatingSelect">seconds</label>
+          </div>
+          <button type="submit" class="btn btn-outline-dark" style="margin-end: 1rem;">Upload</button>
+          <button type="button" onclick="removeUpload()" class="btn btn-outline-dark" style="margin-end: 1rem;">Cencle</button>
         </div>
     </div>
 </form>

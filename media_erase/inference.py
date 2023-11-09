@@ -62,7 +62,7 @@ def lama_cleaner(model_lama, image: np.ndarray, mask: np.ndarray, device: str):
     return Image.fromarray(cur_res)
 
 # 영상 경로 가져와야함
-def video_inference(target_video):
+def video_inference(target_video, selected_second):
     # video_path = 'input_media/video.mp4'
     static_folder = 'media/'
 
@@ -73,7 +73,7 @@ def video_inference(target_video):
         os.makedirs(results_inference_video_path)
 
     # 추론할 이미지
-    folder_path = frame_save(target_video)
+    folder_path = frame_save(target_video, selected_second)
 
     # 폴더 내의 모든 파일 목록 가져오기
     image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
@@ -105,11 +105,10 @@ def video_inference(target_video):
         # box 변환 후 마스크 get
         get_mask_image = get_mask(boxes, image_array)
 
-        # lama 추론
         # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
-        yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image, device='cpu')
+        # yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image, device='cpu')
         
-        # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cuda')
+        yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image, device='cuda')
 
         # 추론 이미지 경로
         result_path = f'media/results_inference_videos/{image_path.split("/")[-1]}'
@@ -118,10 +117,10 @@ def video_inference(target_video):
         # 추론 이미지 저장
         yolo_lama_cleaner.save(result_path)
 
-    set_video(results_inference_video_path, target_video)
+    # set_video(results_inference_video_path, target_video)
 
     delete_folder_contents('media/frame_save')
-    delete_folder_contents('media/results_inference_videos')
+    # delete_folder_contents('media/results_inference_videos')
 
 
 if __name__ == "__main__":

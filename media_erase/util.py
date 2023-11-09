@@ -115,12 +115,13 @@ def get_mask(boxes, image_array):
     return mask
 
 # frame 단위 이미지 저장
-def frame_save(video_path):
+def frame_save(video_path, media_second):
     # 이미지를 저장할 디렉토리 경로
     # frame_directory = 'frame_save/'
 
     static_folder = 'media/'
     frame_video_path = os.path.join(static_folder, 'frame_save')
+    # media/videos/video.mp4
 
     if not os.path.exists(frame_video_path):
         os.makedirs(frame_video_path)
@@ -128,7 +129,6 @@ def frame_save(video_path):
     # 비디오 캡처 객체 생성
     cap = cv2.VideoCapture(video_path)
     video_fps = math.ceil(cap.get(cv2.CAP_PROP_FPS))
-    print(int(video_fps))
 
     # 프레임 간격으로 이미지 저장
     # 영상이 fps=30 일 경우
@@ -138,6 +138,13 @@ def frame_save(video_path):
 
     # 프레임 수 초기화
     frame_count = 0
+
+    # 비디오의 총 프레임 수 가져오기
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # 비디오의 길이(총 시간) 계산
+    duration_in_seconds = round(total_frames / frame_interval)
+    print(duration_in_seconds)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -153,6 +160,8 @@ def frame_save(video_path):
             cv2.imwrite(image_filename, frame)
 
     cap.release()
+
+    print(frame_video_path)
 
     return frame_video_path
 
