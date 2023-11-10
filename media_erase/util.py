@@ -143,11 +143,16 @@ def frame_save(video_path, media_second):
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     # 비디오의 길이(총 시간) 계산
-    duration_in_seconds = round(total_frames / frame_interval)
+    # duration_in_seconds = round(total_frames / frame_interval)
 
     media_second = int(media_second)
 
     count = frame_interval * media_second
+
+    frame_names = video_path
+    frame_names = os.path.basename(video_path)
+    frame_names, extension = os.path.splitext(frame_names)
+    # print(frame_names)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -159,7 +164,7 @@ def frame_save(video_path, media_second):
         # 저장할 때 upload 된 이미지 이름을 가져와서 frame 붙이기
         frame_count += 1
         if frame_count % count == 0:
-            image_filename = os.path.join(frame_video_path, f"frame_{frame_count:04d}.jpg")
+            image_filename = os.path.join(frame_video_path, f"{frame_names}{frame_count:04d}.jpg")
             # 저장 경로를 영상 말고 이미지로 경로를 정해서 해야함
             cv2.imwrite(image_filename, frame)
 

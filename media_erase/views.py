@@ -42,9 +42,13 @@ def inference_media(request, uuid):
     media_path = str(media.media)
     # inference_path = media_path.replace('videos', 'results_video')
 
+    inference_names = media_path
+    inference_names = os.path.basename(media_path)
+    inference_names, extension = os.path.splitext(inference_names)
+
     # 이미지 추론시 저장이름을 업로드 된 영상의 이름 + frame_count
     media_path = 'media/results_inference_videos'  
-    image_names = [f for f in os.listdir(media_path) if f.startswith('frame_') and f.endswith(('.jpg', '.png'))]
+    image_names = [f for f in os.listdir(media_path) if f.startswith(inference_names) and f.endswith(('.jpg', '.png'))]
     
     return render(request, 'media_erase/media_inference.html', {
         'media_path' : media_path,

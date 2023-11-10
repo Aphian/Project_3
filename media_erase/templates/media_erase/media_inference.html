@@ -6,6 +6,7 @@
 <style>
     .inf_video_content {
         padding-top: 5rem;
+        margin-left: 3rem;
     }
 
     .inference_vedio {
@@ -21,12 +22,24 @@
         width: 92%;
         height: 100%;
         object-fit: cover;
-        margin: 1rem;  
+        align-self: center;
+        margin-top: 5px;
+        margin-bottom: 1rem;
     }
 
     .btn_groups{
+    }
+
+    .check_all {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
         text-align: center;
-        margin-top: 2rem;
+        background: #f1f3f9
+    }
+
+    .custom_check_box {
+        margin-top: 7px;
     }
 
 </style>
@@ -40,19 +53,23 @@
 </script>
 
 <div class='inf_video_content'>
-    <h4>Load View Image</h4>
+    <h4>Load View Images</h4>
+    <div class="btn_groups">
+        <span class="check_all">
+            <input class="form-check-input custom_check_box" type="checkbox" value="">
+        </span>
+        <button class="btn btn-outline-dark" style="padding-end: 1rem;">Download</button>
+        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
+    </div>
     <div class="row row-cols-1 row-cols-md-3">
         {% for image_name in image_names %}
-        <div class="video_content col">
+        <div class="video_content col mt-3">
             <div class="card">
+                <input class="form-check-input" style="margin-left: 1rem;" type="checkbox" value="">
                 <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
             </div>
         </div>
         {% endfor %}
-    </div>
-    <div class="btn_groups">
-        <button class="btn btn-outline-dark" style="padding-end: 1rem;">Download</button>
-        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
     </div>
 </div>
 
