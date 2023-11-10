@@ -143,7 +143,7 @@ def frame_save(video_path, media_second):
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     # 비디오의 길이(총 시간) 계산
-    duration_in_seconds = round(total_frames / frame_interval)
+    # duration_in_seconds = round(total_frames / frame_interval)
 
     media_second = int(media_second)
 
