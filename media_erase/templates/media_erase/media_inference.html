@@ -56,22 +56,50 @@
     <h4>Load View Images</h4>
     <div class="btn_groups">
         <span class="check_all">
-            <input class="form-check-input custom_check_box" type="checkbox" value="">
+            <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
         </span>
-        <button class="btn btn-outline-dark" style="padding-end: 1rem;">Download</button>
+        <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
         <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
     </div>
     <div class="row row-cols-1 row-cols-md-3">
         {% for image_name in image_names %}
         <div class="video_content col mt-3">
             <div class="card">
-                <input class="form-check-input" style="margin-left: 1rem;" type="checkbox" value="">
+                <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
                 <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
+<script>
+    function checkAll() {
+        var checkboxes = document.querySelectorAll('.checkBox');
+        var checkAllCheckbox = document.getElementById('checkAll');
+
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkAllCheckbox.checked;
+        }
+    }
+
+    function downloadSelectedImages() {
+        var checkboxes = document.querySelectorAll('.checkBox:checked');
+        
+        checkboxes.forEach(function(checkbox) {
+            var inference_image = "/media/results_inference_videos/" + checkbox.value; // 이미지의 URL
+            var down_file_name = checkbox.value; // 추출된 파일 이름을 설정
+
+            var a = document.createElement('a');
+            a.href = inference_image;
+            a.download = down_file_name;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+    }
+</script>
 
 
 {% endblock content %}
