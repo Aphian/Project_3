@@ -8,3 +8,5 @@ class MediaContents(models.Model):
     media = models.FileField(upload_to='videos/')
 
     media_uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+
+    media_second = models.CharField(max_length=60)

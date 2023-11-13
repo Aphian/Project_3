@@ -8,7 +8,7 @@ import numpy as np
 import torch
 from loguru import logger
 from torch.hub import download_url_to_file, get_dir
-import hashlib
+import hashlib, math
 
 
 def md5sum(filename):
@@ -115,24 +115,44 @@ def get_mask(boxes, image_array):
     return mask
 
 # frame 단위 이미지 저장
-def frame_save(video_path):
+def frame_save(video_path, media_second):
     # 이미지를 저장할 디렉토리 경로
     # frame_directory = 'frame_save/'
 
     static_folder = 'media/'
     frame_video_path = os.path.join(static_folder, 'frame_save')
+    # media/videos/video.mp4
 
     if not os.path.exists(frame_video_path):
         os.makedirs(frame_video_path)
 
     # 비디오 캡처 객체 생성
     cap = cv2.VideoCapture(video_path)
+    video_fps = math.ceil(cap.get(cv2.CAP_PROP_FPS))
 
     # 프레임 간격으로 이미지 저장
-    frame_interval = 30
+    # 영상이 fps=30 일 경우
+    # 영상의 fps 가져와서 입력해야함
+    # 1초당 30장 -> 30번째의 이미지를 저장 -> erase
+    frame_interval = video_fps
 
     # 프레임 수 초기화
     frame_count = 0
+
+    # 비디오의 총 프레임 수 가져오기
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # 비디오의 길이(총 시간) 계산
+    # duration_in_seconds = round(total_frames / frame_interval)
+
+    media_second = int(media_second)
+
+    count = frame_interval * media_second
+
+    frame_names = video_path
+    frame_names = os.path.basename(video_path)
+    frame_names, extension = os.path.splitext(frame_names)
+    # print(frame_names)
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -141,13 +161,14 @@ def frame_save(video_path):
             break
 
         # 각 프레임을 이미지로 저장
+        # 저장할 때 upload 된 이미지 이름을 가져와서 frame 붙이기
         frame_count += 1
-        if frame_count % frame_interval == 0:
-            image_filename = os.path.join(frame_video_path, f"frame_{frame_count:04d}.jpg")
+        if frame_count % count == 0:
+            image_filename = os.path.join(frame_video_path, f"{frame_names}{frame_count:04d}.jpg")
+            # 저장 경로를 영상 말고 이미지로 경로를 정해서 해야함
             cv2.imwrite(image_filename, frame)
 
     cap.release()
-
     return frame_video_path
 
 # 이미지 영상으로 변환

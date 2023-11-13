@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load bootstrap5 %}
+{% load static %}
 {% block content %}
 
 <style>
     .inf_video_content {
         padding-top: 5rem;
+        margin-left: 3rem;
     }
 
     .inference_vedio {
@@ -14,17 +16,35 @@
     .video_content {
         width: 540px;
         height: 300px;
-        margin-bottom: 4rem;
     }
 
     .vid_content {
-        width: 100%;
+        width: 92%;
         height: 100%;
         object-fit: cover;
+        align-self: center;
+        margin-top: 5px;
+        margin-bottom: 1rem;
     }
 
     .btn_groups{
+        margin-bottom: 1rem;
+    }
+
+    .check_all {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
         text-align: center;
+        background: #f1f3f9
+    }
+
+    .custom_check_box {
+        margin-top: 7px;
+    }
+
+    .inf_head {
+        margin-bottom: 1rem;
     }
 
 </style>
@@ -35,44 +55,52 @@
         window.location.href = '/video';
     }
 
-    var inference_video = "/media/{{ inference_path }}";
+    function checkAll() {
+        var checkboxes = document.querySelectorAll('.checkBox');
+        var checkAllCheckbox = document.getElementById('checkAll');
 
-    function set_img_name(inference_video) {
-        var down_file = inference_video.split('/');
-        return down_file[down_file.length - 1];
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = checkAllCheckbox.checked;
+        }
     }
 
-    function VideoDownload() {
-        var down_file_name = set_img_name(inference_video);
-        console.log(down_file_name)
+    function downloadSelectedImages() {
+        var checkboxes = document.querySelectorAll('.checkBox:checked');
+        
+        checkboxes.forEach(function(checkbox) {
+            var inference_image = "/media/results_inference_videos/" + checkbox.value; // 이미지의 URL
+            var down_file_name = checkbox.value; // 추출된 파일 이름을 설정
 
-        var a = document.createElement('a');
-        a.href = inference_video;
-        a.download = down_file_name; // 추출된 파일 이름을 설정
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+            var a = document.createElement('a');
+            a.href = inference_image;
+            a.download = down_file_name;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
     }
 
 </script>
 
-<div class='d-flex justify-content-center inf_video_content'>
-    <div class='row inference_vedio'>
-        <div class="col-6 video_content">
-            <h4>Before</h4>
-            <video src="/media/{{ media_path }}" controls class="vid_content"></video>
+<div class='inf_video_content'>
+    <h4 class="inf_head">Load View Images</h4>
+    <div class="btn_groups">
+        <span class="check_all">
+            <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
+        </span>
+        <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
+        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3" style="margin-bottom: 5rem;">
+        {% for image_name in image_names %}
+        <div class="video_content col mt-3">
+            <div class="card">
+                <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
+                <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
+            </div>
         </div>
-        <div class="col-6 video_content">
-            <h4>After</h4>
-            <video src="/media/{{ inference_path }}" controls class="vid_content"></video>
-        </div>
+        {% endfor %}
     </div>
 </div>
-<div class="btn_groups">
-    <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="VideoDownload()">Download</button>
-    <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
-</div>
-
-
 {% endblock content %}

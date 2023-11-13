@@ -48,8 +48,10 @@ def yolo_inference_seg(image_path):
     
     return poly_xyn
 
-def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
-    model = load_lama_cleaner()
+# 모델 업로드
+model_lama = load_lama_cleaner()
+
+def lama_cleaner(model_lama, image: np.ndarray, mask: np.ndarray, device: str):
     
     image = norm_img(image)
     mask = norm_img(mask)
@@ -58,7 +60,7 @@ def lama_cleaner(image: np.ndarray, mask: np.ndarray, device: str):
     image = torch.from_numpy(image).unsqueeze(0).to(device)
     mask = torch.from_numpy(mask).unsqueeze(0).to(device)
 
-    inpainted_image = model(image, mask) # inference
+    inpainted_image = model_lama(image, mask) # inference
 
     cur_res = inpainted_image[0].permute(1, 2, 0).detach().cpu().numpy()
     cur_res = np.clip(cur_res * 255, 0, 255).astype("uint8")
@@ -109,9 +111,8 @@ def img_inference(target_img):
     get_mask_image_seg = get_mask_seg(polygon, image_array)
 
     # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
-    # yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image, device='cpu')
+    yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image_seg, device='cuda')
     # cuda 장치 환경이 있을 경우 사용
-    yolo_lama_cleaner = lama_cleaner(image_array, get_mask_image_seg, device='cuda')
     
     # media/inference_images 폴더에 경로지정
     # '/images'를 'inferenced_images'로 대체하여 변경
