@@ -28,6 +28,7 @@
     }
 
     .btn_groups{
+        margin-bottom: 1rem;
     }
 
     .check_all {
@@ -42,6 +43,10 @@
         margin-top: 7px;
     }
 
+    .inf_head {
+        margin-bottom: 1rem;
+    }
+
 </style>
 
 <script>
@@ -50,30 +55,6 @@
         window.location.href = '/video';
     }
 
-</script>
-
-<div class='inf_video_content'>
-    <h4>Load View Images</h4>
-    <div class="btn_groups">
-        <span class="check_all">
-            <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
-        </span>
-        <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
-        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
-    </div>
-    <div class="row row-cols-1 row-cols-md-3">
-        {% for image_name in image_names %}
-        <div class="video_content col mt-3">
-            <div class="card">
-                <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
-                <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-
-<script>
     function checkAll() {
         var checkboxes = document.querySelectorAll('.checkBox');
         var checkAllCheckbox = document.getElementById('checkAll');
@@ -99,7 +80,27 @@
             document.body.removeChild(a);
         });
     }
+
 </script>
 
-
+<div class='inf_video_content'>
+    <h4 class="inf_head">Load View Images</h4>
+    <div class="btn_groups">
+        <span class="check_all">
+            <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
+        </span>
+        <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
+        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
+    </div>
+    <div class="row row-cols-1 row-cols-md-3" style="margin-bottom: 5rem;">
+        {% for image_name in image_names %}
+        <div class="video_content col mt-3">
+            <div class="card">
+                <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
+                <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock content %}
