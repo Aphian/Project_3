@@ -118,12 +118,6 @@ def video_inference(target_video, selected_second):
 
         # 추론 이미지 저장
         yolo_lama_cleaner.save(result_path)
-        
-        sorted(result_path)
-
-    # set_video(results_inference_video_path, target_video)
-    # delete_folder_contents('media/results_inference_videos')
-
 
     delete_folder_contents('media/frame_save')
 

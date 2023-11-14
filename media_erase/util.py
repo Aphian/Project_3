@@ -162,6 +162,7 @@ def frame_save(video_path, media_second):
             cv2.imwrite(image_filename, frame)            
 
     cap.release()
+    
     return frame_video_path
 
 # 이미지 영상으로 변환
