@@ -121,6 +121,9 @@ def video_inference(target_video, selected_second):
 
     # set_video(results_inference_video_path, target_video)
     # delete_folder_contents('media/results_inference_videos')
+
+    sorted(result_path)
+
     delete_folder_contents('media/frame_save')
 
 if __name__ == "__main__":
