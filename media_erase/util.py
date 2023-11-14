@@ -157,12 +157,9 @@ def frame_save(video_path, media_second):
         # 저장할 때 upload 된 이미지 이름을 가져와서 frame 붙이기
         frame_count += 1
         if frame_count % count == 0:
-            timestamp = int(time.time())
-            image_filename = os.path.join(frame_video_path, f"{frame_names}_{timestamp:012d}.jpg")
+            image_filename = os.path.join(frame_video_path, f"{frame_names}_{frame_count:04d}.jpg")
             # 저장 경로를 영상 말고 이미지로 경로를 정해서 해야함
-            cv2.imwrite(image_filename, frame)
-
-            time.sleep(1)
+            cv2.imwrite(image_filename, frame)            
 
     cap.release()
     return frame_video_path

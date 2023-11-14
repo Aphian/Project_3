@@ -77,8 +77,10 @@ def video_inference(target_video, selected_second):
 
     # 폴더 내의 모든 파일 목록 가져오기
     image_files = [f for f in os.listdir(folder_path) if f.endswith('.jpg')]
+
+    sorted_image_files = sorted(image_files)
     
-    for image_file in image_files:
+    for image_file in sorted_image_files:
         image_path = os.path.join(folder_path, image_file)
     
         # 이미지 로드
