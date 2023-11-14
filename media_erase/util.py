@@ -162,7 +162,7 @@ def frame_save(video_path, media_second):
             # 저장 경로를 영상 말고 이미지로 경로를 정해서 해야함
             cv2.imwrite(image_filename, frame)
 
-            time.sleep(0.5)
+            time.sleep(1)
 
     cap.release()
     return frame_video_path
