@@ -86,6 +86,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'detect_erase.wsgi.application'
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/home/ubuntu/.cache',
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
