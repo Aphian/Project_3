@@ -67,7 +67,7 @@ def video_inference(target_video, selected_second):
     static_folder = 'media/'
 
     # 추론 결과 이미지 폴더가 없으면 생성
-    results_inference_video_path = os.path.join(static_folder, 'results_inference_videos')
+    results_inference_video_path = os.path.join(static_folder, 'inferenced_videos')
     
     if not os.path.exists(results_inference_video_path):
         os.makedirs(results_inference_video_path)
@@ -113,7 +113,7 @@ def video_inference(target_video, selected_second):
         yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image, device='cuda')
 
         # 추론 이미지 경로
-        result_path = f'media/results_inference_videos/{image_path.split("/")[-1]}'
+        result_path = f'media/inferenced_videos/{image_path.split("/")[-1]}'
         result_path = result_path.replace("/frame_save", "")
 
         # 추론 이미지 저장

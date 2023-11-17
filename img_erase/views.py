@@ -9,6 +9,7 @@ from uuid import uuid4
 from . import inference
 from . models import ImageContents
 from . forms import ImageContentsForm
+from media_erase import util
 import base64
 
 def img_detect(target_img):
@@ -31,6 +32,12 @@ def main(request):
             return redirect('img_erase:inference_img' ,uuid=image.image_uuid)
             
     else:
+        # 폴더 초기화
+        util.delete_folder_contents('media/images')
+        util.delete_folder_contents('media/inferenced_images')
+        util.delete_folder_contents('media/inferenced_videos')
+        util.delete_folder_contents('media/videos')
+
         img_form = ImageContentsForm()
     
     return render(request, 'img_erase/main.html', {'img_form': img_form})
