@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
@@ -54,6 +55,20 @@ def inference_media(request, uuid):
     before_image_names = [f for f in os.listdir(media_path) if f.startswith(inference_names) and f.endswith(('.jpg', '.png'))]
 
     image_names = sorted(before_image_names)
+
+    # 페이징 설정
+    paginator = Paginator(image_names, 4)  # 페이지당 8개의 항목을 표시하도록 설정
+    page_number = request.GET.get('page')
+
+    try:
+        image_names = paginator.page(page_number)
+    except PageNotAnInteger:
+        # 페이지 번호가 정수가 아닌 경우, 첫 번째 페이지를 가져옴
+        image_names = paginator.page(1)
+    except EmptyPage:
+        # 페이지 번호가 범위를 벗어난 경우, 마지막 페이지를 가져옴
+        image_names = paginator.page(paginator.num_pages)
+
     
     return render(request, 'media_erase/media_inference.html', {
         'media_path' : media_path,
