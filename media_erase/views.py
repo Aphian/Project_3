@@ -3,6 +3,7 @@ from django.views.decorators.http import require_GET, require_http_methods, requ
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -11,7 +12,7 @@ from . import inference
 from . models import MediaContents
 from . forms import MediaContentsForm
 from . util import delete_folder_contents
-import base64, os
+import base64, os, zipfile
 
 # Create your views here.
 
@@ -44,7 +45,13 @@ def media_upload(request):
 def inference_media(request, uuid):
     media = get_object_or_404(MediaContents, media_uuid=uuid)
     media_path = str(media.media)
-    # inference_path = media_path.replace('videos', 'results_video')
+    download_name = str(media.media)
+
+    # 파일 경로에서 파일 이름만 추출
+    download_name = os.path.basename(download_name)
+
+    # 파일 이름에서 확장자 제거
+    download_name, extension = os.path.splitext(download_name)
 
     inference_names = media_path
     inference_names = os.path.basename(media_path)
@@ -72,6 +79,35 @@ def inference_media(request, uuid):
     
     return render(request, 'media_erase/media_inference.html', {
         'media_path' : media_path,
+        'download_name' : download_name,
         # 'inference_path' : inference_path,
         'image_names': image_names,
     })
+
+@csrf_exempt
+def zip_and_download(request):
+    # 압축할 폴더의 경로
+    folder_path = 'media/inferenced_videos/'
+
+    # 폴더 이름 추출
+    folder_name = os.path.basename(folder_path)
+
+    # zip 파일 생성
+    zip_file_path = f'downloaded_{folder_name}.zip'
+    with zipfile.ZipFile(zip_file_path, 'w') as zip_file:
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                zip_file.write(file_path, os.path.relpath(file_path, folder_path))
+
+    # Serve the zip file with a dynamic filename
+    with open(zip_file_path, 'rb') as zip_file:
+        response = HttpResponse(zip_file.read(), content_type='application/zip')
+        response['Content-Disposition'] = f'attachment; filename="{ generate_dynamic_filename() }.zip"'
+        return response
+    
+def generate_dynamic_filename():
+    # 여기에서 동적으로 파일 이름을 생성하는 로직을 추가
+    # 예: 현재 날짜와 시간을 기반으로 파일 이름 생성
+    import datetime
+    return f'Cleaner_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}'
