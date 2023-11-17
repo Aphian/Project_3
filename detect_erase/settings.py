@@ -11,15 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os, torch
-
-# # CUDA 사용 가능 여부 확인
-# if torch.cuda.is_available():
-#     device = torch.device("cuda")
-#     print("CUDA 사용 가능")
-# else:
-#     device = torch.device("cpu")
-#     print("CUDA 사용 불가능")
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +30,6 @@ ALLOWED_HOSTS = [
     ".ap-northeast-1.compute.amazonaws.com",
     "54.249.206.18",
 ]
-
 
 # Application definition
 
@@ -87,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'detect_erase.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -134,7 +124,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATICFILES_DIRS = [BASE_DIR / 'static']
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files
 MEDIA_URL = 'media/'
