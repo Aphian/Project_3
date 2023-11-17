@@ -9,6 +9,7 @@ from uuid import uuid4
 from . import inference
 from . models import ImageContents
 from . forms import ImageContentsForm
+from media_erase import util
 import base64
 
 def img_detect(target_img):
@@ -31,6 +32,8 @@ def main(request):
             return redirect('img_erase:inference_img' ,uuid=image.image_uuid)
             
     else:
+        util.delete_folder_contents('media/results_inference_videos')
+
         img_form = ImageContentsForm()
     
     return render(request, 'img_erase/main.html', {'img_form': img_form})

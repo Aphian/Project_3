@@ -9,6 +9,7 @@ from uuid import uuid4
 from . import inference
 from . models import MediaContents
 from . forms import MediaContentsForm
+from . util import delete_folder_contents
 import base64, os
 
 # Create your views here.
@@ -32,6 +33,8 @@ def media_upload(request):
 
             return redirect('media_erase:inference_media', uuid=media.media_uuid)
     else:
+        delete_folder_contents('media/results_inference_videos')
+        
         media_form = MediaContentsForm()
     return render(request, 'media_erase/upload_video.html', {
         'media_form' : media_form,
