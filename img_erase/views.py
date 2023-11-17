@@ -32,6 +32,8 @@ def main(request):
             return redirect('img_erase:inference_img' ,uuid=image.image_uuid)
             
     else:
+        util.delete_folder_contents('media/images')
+        util.delete_folder_contents('media/inferenced_images')
         util.delete_folder_contents('media/results_inference_videos')
 
         img_form = ImageContentsForm()
