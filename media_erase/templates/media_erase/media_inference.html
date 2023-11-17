@@ -68,7 +68,7 @@
         var checkboxes = document.querySelectorAll('.checkBox:checked');
         
         checkboxes.forEach(function(checkbox) {
-            var inference_image = "/media/results_inference_videos/" + checkbox.value; // 이미지의 URL
+            var inference_image = "/media/inference_videos/" + checkbox.value; // 이미지의 URL
             var down_file_name = checkbox.value; // 추출된 파일 이름을 설정
 
             var a = document.createElement('a');
@@ -97,7 +97,7 @@
         <div class="video_content col mt-3">
             <div class="card">
                 <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
-                <img src="/media/results_inference_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
+                <img src="/media/inferenced_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
             </div>
         </div>
         {% endfor %}

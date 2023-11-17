@@ -32,9 +32,11 @@ def main(request):
             return redirect('img_erase:inference_img' ,uuid=image.image_uuid)
             
     else:
+        # 폴더 초기화
         util.delete_folder_contents('media/images')
         util.delete_folder_contents('media/inferenced_images')
-        util.delete_folder_contents('media/results_inference_videos')
+        util.delete_folder_contents('media/inferenced_videos')
+        util.delete_folder_contents('media/videos')
 
         img_form = ImageContentsForm()
     
