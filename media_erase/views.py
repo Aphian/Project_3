@@ -33,7 +33,7 @@ def media_upload(request):
 
             return redirect('media_erase:inference_media', uuid=media.media_uuid)
     else:
-        delete_folder_contents('media/inference_videos')
+        delete_folder_contents('media/inferenced_videos')
         
         media_form = MediaContentsForm()
     return render(request, 'media_erase/upload_video.html', {
@@ -50,7 +50,7 @@ def inference_media(request, uuid):
     inference_names, extension = os.path.splitext(inference_names)
 
     # 이미지 추론시 저장이름을 업로드 된 영상의 이름 + frame_count
-    media_path = 'media/inference_videos'  
+    media_path = 'media/inferenced_videos'  
     before_image_names = [f for f in os.listdir(media_path) if f.startswith(inference_names) and f.endswith(('.jpg', '.png'))]
 
     image_names = sorted(before_image_names)
