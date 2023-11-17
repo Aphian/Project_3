@@ -47,6 +47,41 @@
         margin-bottom: 1rem;
     }
 
+    .pagination,
+    .jsgrid .jsgrid-pager {
+        display: flex;
+        padding-left: 0;
+        list-style: none;
+        border-radius: 0.25rem;
+    }
+    
+    .page-link {
+        color: black;
+        border: none;
+    }
+    
+    .pagination.pagination-rounded-flat .page-item {
+        margin: 0 .25rem;
+    }
+    
+    .pagination-rounded-flat { }
+    
+    .pagination-success .page-item.active .page-link,
+    .pagination-success .page-item.active:hover .page-link,
+    .pagination-success .page-item.active:focus .page-link,
+    .pagination-success a.page-link:hover,
+    .pagination-success a.page-link:active,
+    .pagination-success a.page-link:focus {
+        background-color: #00c689 !important;
+        border-color: #00c689 !important;
+        color: white !important;
+    }
+    
+    .pagination.pagination-rounded-flat .page-item .page-link,
+    a {
+        border: none;
+        border-radius: 50px;
+    }
 </style>
 
 <script>
@@ -106,7 +141,7 @@
 
     <!-- Pagination -->
     <nav aria-label="Page navigation" class="mt-5">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-start">
             {% if image_names.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ image_names.previous_page_number }}" aria-label="Previous">
