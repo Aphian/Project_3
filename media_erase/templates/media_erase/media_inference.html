@@ -89,6 +89,7 @@
         <span class="check_all">
             <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
         </span>
+        <button class="btn btn-outline-dark" onclick="downloadZip()">All Download</button>
         <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
         <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
     </div>
@@ -139,4 +140,30 @@
     </nav>
     
 </div>
+
+<script>
+    function downloadZip() {
+        // 서버에 요청을 보내는 XMLHttpRequest 객체 생성
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/video/zip_and_download/', true);
+        xhr.responseType = 'blob';  // 응답을 Blob 형식으로 받음
+
+        xhr.onload = function() {
+            // 다운로드 링크를 생성하고 클릭하여 다운로드 시작
+            var blob = new Blob([xhr.response], { type: 'application/zip' });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+
+            // 서버에서 전달받은 파일 이름 사용
+            var contentDisposition = xhr.getResponseHeader('Content-Disposition');
+            var matches = /filename="(.+?)"/.exec(contentDisposition);
+            var fileName = matches ? matches[1] : 'downloaded_files';
+
+            link.download = fileName;
+            link.click();
+        };
+
+        xhr.send();
+    }
+</script>
 {% endblock content %}
