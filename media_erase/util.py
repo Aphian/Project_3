@@ -205,7 +205,8 @@ def set_video(results_inference_video_path, target_video):
 
 # 영상 생성 후 frame 이미지 / 추론 이미지 폴더 내용 삭제
 def delete_folder_contents(folder_path):
-    for item in os.listdir(folder_path):
-        item_path = os.path.join(folder_path, item)
-        if os.path.isfile(item_path):
-            os.remove(item_path)
+    if os.path.exists(folder_path) and os.path.isdir(folder_path):
+        for item in os.listdir(folder_path):
+            item_path = os.path.join(folder_path, item)
+            if os.path.isfile(item_path):
+                os.remove(item_path)
