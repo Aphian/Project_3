@@ -28,6 +28,7 @@
     }
 
     .btn_groups{
+        margin-top: 2rem;
         margin-bottom: 1rem;
     }
 
@@ -124,13 +125,13 @@
         <span class="check_all">
             <input class="form-check-input custom_check_box" type="checkbox" value="" id="checkAll" onclick="checkAll()">
         </span>
-        <button class="btn btn-outline-dark" onclick="downloadZip()">All Download</button>
-        <button class="btn btn-outline-dark" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
-        <button class="btn btn-outline-dark" onclick="VideoUploadMove()">Back</button>
+        <button class="btn btn-light" onclick="downloadZip()">All Download</button>
+        <button class="btn btn-light" style="padding-end: 1rem;" onclick="downloadSelectedImages()">Download</button>
+        <button class="btn btn-light" onclick="VideoUploadMove()">Back</button>
     </div>
-    <div class="row row-cols-1 row-cols-md-3" style="margin-bottom: 5rem;">
+    <div class="row" style="margin-bottom: 2rem;">
         {% for image_name in image_names %}
-        <div class="video_content col mt-3">
+        <div class="video_content mt-3">
             <div class="card">
                 <input class="form-check-input checkBox" style="margin-left: 1rem;" type="checkbox" value="{{ image_name }}">
                 <img src="/media/inferenced_videos/{{ image_name }}" alt="{{ image_name }}" class="vid_content">
@@ -140,7 +141,7 @@
     </div>
 
     <!-- Pagination -->
-    <nav aria-label="Page navigation" class="mt-5">
+    <nav aria-label="Page navigation">
         <ul class="pagination justify-content-start">
             {% if image_names.has_previous %}
             <li class="page-item">
@@ -173,7 +174,6 @@
             {% endif %}
         </ul>
     </nav>
-    
 </div>
 
 <script>
