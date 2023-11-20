@@ -108,8 +108,9 @@
     });
 </script>
 
-<div class="d-flex justify-content-center" style="padding-top: 5rem;">
-    <h1>Summary</h1>
+<div style="padding-top: 5rem; text-align: center;">
+  <h3 style="color: black;">Remove people from video in Road View.</h3>
+  <h3 style="color: black;">Upload your Road View video.</h3>
 </div>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -124,18 +125,18 @@
         <video id="videoPlayer" controls class="file-upload-video"></video>
         <div class="video-title-wrap" style="display: inline-block;">
           <div class="form-floating">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="media_second">
-              <option selected>select seconds</option>
-              <option value="5" selected >5초</option>
-              <option value="10">10초</option>
-              <option value="30">30초</option>
-              <option value="60">60초</option>
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name="media_second" style="width: 10rem;">
+              <option value="1" selected>1 seconds</option>
+              <option value="5" >5 seconds</option>
+              <option value="10">10 seconds</option>
+              <option value="30">30 seconds</option>
+              <option value="60">60 seconds</option>
             </select>
-            <label for="floatingSelect">초 단위 선택</label>
+            <label for="floatingSelect">Selected Seconds</label>
           </div>
         </div>
-        <button type="submit" class="btn btn-outline-dark" style="margin-end: 1rem;">Upload</button>
-        <button type="button" onclick="removeUpload()" class="btn btn-outline-dark" style="margin-end: 1rem;">Cancle</button>
+        <button type="submit" class="btn btn-light" style="margin-end: 1rem;">Upload</button>
+        <button type="button" onclick="removeUpload()" class="btn btn-light" style="margin-end: 1rem;">Cancle</button>
     </div>
 </form>
 
