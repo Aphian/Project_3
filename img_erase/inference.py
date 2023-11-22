@@ -43,8 +43,10 @@ def yolo_inference_seg(image_path):
     model = load_yolo_seg()
     # 이미지 추론시 size 조정이 필요함
     results = model(image_path, classes = 0)
-    
-    poly_xyn = results[0].masks.xyn
+    try:
+        poly_xyn = results[0].masks.xyn
+    except AttributeError:
+        poly_xyn = None
     
     return poly_xyn
 
@@ -80,6 +82,9 @@ def img_inference(target_img):
     # input image 경로 (media/images 경로로 지정)
     image_path = target_img
 
+    # media/images/파일명.jpg
+    # print(image_path)
+
     # 이미지 로드
     image = Image.open(image_path)
 
@@ -103,23 +108,29 @@ def img_inference(target_img):
 
     # yolo 추론 polygon
     polygon = yolo_inference_seg(image_path)
-    
-    # box 변환 후 마스크 get
-    # get_mask_image = get_mask(boxes, image_array)
 
-    # get_mask_image seg
-    get_mask_image_seg = get_mask_seg(polygon, image_array)
+    if polygon is not None:
 
-    # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
-    # yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image_seg, device='cpu')
-    # cuda 장치 환경이 있을 경우 사용
-    yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image_seg, device='cuda')
-    
-    # media/inference_images 폴더에 경로지정
-    # '/images'를 'inferenced_images'로 대체하여 변경
-    file_path = target_img.replace('/images', '/inferenced_images')
-    
-    yolo_lama_cleaner.save(file_path)
+        # box 변환 후 마스크 get
+        # get_mask_image = get_mask(boxes, image_array)
+
+        # get_mask_image seg
+        get_mask_image_seg = get_mask_seg(polygon, image_array)
+
+        # lama 추론 CUDA 장치 설정이 없을 시 cpu 사용
+        # yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image_seg, device='cpu')
+        # cuda 장치 환경이 있을 경우 사용
+        yolo_lama_cleaner = lama_cleaner(model_lama, image_array, get_mask_image_seg, device='cuda')
+            
+        # media/inference_images 폴더에 경로지정
+        # '/images'를 'inferenced_images'로 대체하여 변경
+        file_path = target_img.replace('/images', '/inferenced_images')
+            
+        yolo_lama_cleaner.save(file_path)
+
+    else:
+        file_path = target_img.replace('/images', '/inferenced_images')
+        image.save(file_path)
 
 if __name__ == "__main__":
 
