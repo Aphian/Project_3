@@ -201,10 +201,13 @@
         xhr.send();
     }
 
-    $(document).ready(function() {
-        $(".vid_content").click(function() {
-            $(this).closest('.card').find('.checkBox').prop('checked', function(i, value) {
-                return !value;
+    $(document).ready(function () {
+        console.log("Document is ready!");
+        // 이미지를 클릭할 때 이벤트 핸들러 등록
+        $(".vid_content").click(function () {
+            // 클릭한 이미지의 부모 요소에서 checkbox를 찾아서 체크/해제
+            $(this).closest('.card').find('.checkBox').prop('checked', function (i, value) {
+                return !value; // 현재 상태의 반대로 설정
             });
         });
     });
