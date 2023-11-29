@@ -200,5 +200,13 @@
 
         xhr.send();
     }
+
+    $(document).ready(function() {
+        $(".vid_content").click(function() {
+            $(this).closest('.card').find('.checkBox').prop('checked',, function(i, value) {
+                return !value;
+            });
+        });
+    });
 </script>
 {% endblock content %}
